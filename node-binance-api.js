@@ -3321,6 +3321,28 @@ let api = function Binance( options = {} ) {
             }
         },
 
+        /**
+        * Gets the dust log for user
+        * @param {function} callback - the callback function
+        * @return {promise or undefined} - omitting the callback returns a promise
+        */
+        dustLogSapi: function ( callback, params ) {
+            if ( !callback ) {
+                return new Promise( ( resolve, reject ) => {
+                    callback = ( error, response ) => {
+                        if ( error ) {
+                            reject( error );
+                        } else {
+                            resolve( response );
+                        }
+                    }
+                    signedRequest( sapi + 'v1/asset/dribblet', params, callback );
+                } )
+            } else {
+                signedRequest( sapi + 'v1/asset/dribblet', params, callback );
+            }
+        },
+
         dustTransfer: function ( assets, callback ) {
             signedRequest( sapi + 'v1/asset/dust', { asset: assets }, callback, 'POST' );
         },
